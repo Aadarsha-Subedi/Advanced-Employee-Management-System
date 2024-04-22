@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Anish">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This page has form for employee to add in the employee list.">
+    <link rel="stylesheet" th:href="@{/CSS/UserLeaveRequestForm.css}">
+    <title>Add/Update Employee</title>
+</head>
+
+<body>
+    <section class="login">
+        <form id="addItemForm">
+            <h2 id="formTitle">Leave Request</h2>
+            <div class="input">
+                <label for="userID">User ID</label>
+                <input type="number" id="userID" name="userID"><br><br>
+            </div>
+
+            <div class="input">
+                <label for="description">Description</label><br>
+                <textarea name="description" id="description" cols="42" rows="2.5"
+                    placeholder="Leave Message"></textarea>
+                <br><br>
+            </div>
+
+            <div class="input">
+                <label for="from_date">From Date</label>
+                <input type="date" id="from_date" name="from_date"><br><br>
+            </div>
+            <div class="input">
+                <label for="from_date">To Date</label>
+                <input type="date" id="to_date" name="to_date">
+            </div>
+
+            <button type="submit" id="submitButton">Send Request</button>
+        </form>
+    </section>
+    <script th:src="@{/JavaScript/script_for_form.js}" defer></script>
+</body>
+
+</html>

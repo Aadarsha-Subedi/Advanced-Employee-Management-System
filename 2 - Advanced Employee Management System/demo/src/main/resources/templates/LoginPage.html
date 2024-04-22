@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Anish">
+  <meta name="description" content="This is login page for the Employee Manager">
+  <title>Employee Management System</title>
+  <link th:href='@{/CSS/LoginPage.css}' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="fixed">
+    <p class="logo-text">AEMS</p>
+
+  </div>
+	
+  <section class="login">
+    <!-- Add Thymeleaf iteration to display errors -->
+    <form th:object="${loginDetailsDTO}" th:action="@{/}" id="login-form" th:method="post">
+
+      <h1>Login Form</h1>
+      <div class="input">
+        <input type="number" th:id="userID" th:name="userID" placeholder="UserID">
+        <i class='bx bxs-user'></i>
+        <!-- Display validation errors for userID -->
+        <span th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}" class="error"></span>
+      </div>
+
+      <div class="input">
+        <input type="password" th:id="userPassword" th:name="userPassword" placeholder="*****" required th:trim="false">
+        <i class='bx bxs-lock-alt'></i>
+        <!-- Display validation errors for password -->
+        <span th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}" class="error"></span>
+      </div>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </section>
+  
+   <footer>
+    <p>&copy; 2024 AEMS. All rights reserved.</p>
+  </footer>
+  <script></script>
+</body>
+
+</html>

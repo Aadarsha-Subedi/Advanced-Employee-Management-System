@@ -1,0 +1,163 @@
+@charset "ISO-8859-1";
+@import url("https://fonts.googleapis.com/css2?family=Labrada:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Labrada", serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 200vh;
+}
+
+.fixed {
+  height: 12vh;
+  position: sticky;
+  padding: 12px;
+  margin: 0;
+  margin-bottom: 1%;
+  top: 0;
+  background: #212a3e;
+  z-index: 12;
+}
+
+.logo-text {
+  position: absolute;
+  top: 1.1rem;
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  filter: invert(1);
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.insider {
+  position: absolute;
+}
+
+.home-icon {
+  filter: invert(1);
+  left: 12rem;
+  top: 1.3rem;
+}
+
+.edit_emp {
+  top: 1.12rem;
+  left: 30rem;
+  filter: invert(1);
+}
+
+.task {
+  top: 1.2rem;
+  left: 45rem;
+  filter: invert(1);
+}
+.leave {
+  top: 1.2rem;
+  left: 54rem;
+  filter: invert(1);
+}
+
+.logout {
+  top: 1.2rem;
+  right: 2rem;
+  filter: invert(1);
+}
+
+header,
+nav,
+main,
+footer {
+  padding: 20px;
+}
+
+header {
+  background-color: #9ba4b5;
+  color: #fff;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav ul li a:hover {
+  color: #777;
+}
+
+main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile,
+.tasks {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.updates,
+.company-news {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f2f2f2;
+}
+
+.updates h2,
+.company-news h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.updates p,
+.company-news p {
+  color: #777;
+}
+
+.profile form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile label {
+  margin-bottom: 5px;
+}
+
+.profile input {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 200px;
+}
+
+form input {
+  border: none;
+  outline: none;
+  background: none;
+}
+
+footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #212a3e;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
