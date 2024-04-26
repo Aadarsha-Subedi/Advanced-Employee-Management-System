@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Page</title>
+    <link rel="stylesheet" th:href="@{/CSS/UserPage.css}">
+   <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the Employee Portal</h1>
+    </header>
+    <div class="fixed">
+        <a th:href="@{/UserPage}"><img class="home-icon insider" th:src="@{/Images/home_icon.png}" alt="home"
+                title="Home" width="28" height="28"> </a>
+        <a th:href="@{/UserTaskPage}"><img class="emp-icon insider edit_emp"
+                th:src="@{/Images/task_icon.png}" alt="emp-icon" title="Employee Information" width="32" height="32"></a>
+        <a th:href="@{/UserLeaveRequestPage}"><img class="task-icon insider leave" th:src="@{/Images/leave_icon.png}"
+                alt="leave-icon" title="Leave Page" width="30" height="30"> </a>
+        <a th:href="@{/logout}"><img class="logout-icon insider logout" th:src="@{/Images/logout_icon.png}"
+                alt="leave-icon" title="Leave Page" width="30" height="30"> </a>
+    </div>
+    <main>
+        <section class="profile">
+            <h2>My Profile</h2>
+            <form>
+                <label for="userId">User ID:</label>
+                <span th:text="${userID}"></span>
+                <label for="name">Full Name:</label>
+                <span th:text="${fullName}"></span>
+                <label for="department">Email:</label>
+                <span th:text="${email}"></span>
+                <label for="position">Phone Number:</label>
+                <span th:text="${phoneNumber}"></span>
+            </form>
+        </section>
+    </main>
+    <section class="updates">
+        <h2>Updates</h2>
+		<table class = "table table-striped table-bordered">
+			<thead class = "table-dark">
+				<tr>
+					<th> Update Description</th>
+					<th> Update Date</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "updateDetail: ${updateDetails}">
+					<td th:text = "${updateDetail.description}"></td>
+					<td th:text = "${updateDetail.uploadDate}"></td>
+				</tr>
+				
+			</tbody>
+		
+		</table>
+    </section>
+    <footer>
+        <p>&copy; 2024 AEMS. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

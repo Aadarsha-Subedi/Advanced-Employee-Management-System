@@ -1,0 +1,190 @@
+package com.example.demo.Controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.example.demo.DTO.UpdateDetailsDTO;
+import com.example.demo.DTO.UserDetailsDTO;
+import com.example.demo.Entity.UpdateDetails;
+import com.example.demo.Entity.UserDetails;
+import com.example.demo.Entity.UserLeaveRequest;
+import com.example.demo.Service.EmployeeServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class AdminController {
+	
+	@Autowired
+	EmployeeServiceImpl employeeServiceImpl;
+	
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+	
+	@GetMapping("/AdminPage")
+	public String AdminPage(Model model, HttpSession session) {
+		List<UpdateDetails> updateDetails = employeeServiceImpl.getallUpdates();
+	    // Retrieve user details from session
+	    model.addAttribute("userID", session.getAttribute("userID"));
+	    model.addAttribute("fullName", session.getAttribute("fullName"));
+	    model.addAttribute("email", session.getAttribute("email"));
+	    model.addAttribute("phoneNumber", session.getAttribute("phoneNumber"));
+	    model.addAttribute("updateDetails", updateDetails);
+	    return "AdminPage";
+	}
+	
+	@GetMapping("/AdminPage/PostNewUpdate")
+	public String postNewUpdate(Model model) {
+		model.addAttribute("updateDetailsDTO", new UpdateDetailsDTO());
+		return "NewUpdatePage";
+	}
+	
+	@PostMapping("/AdminPage")
+	public String saveUpdate(@ModelAttribute("updateDetailsDTO") UpdateDetailsDTO updateDetailsDTO) {
+		UpdateDetails updateDetails = new UpdateDetails();
+		updateDetails.setId(updateDetailsDTO.getId());
+		updateDetails.setDescription(updateDetailsDTO.getDescription());
+		updateDetails.setUploadDate(updateDetailsDTO.getUploadDate());
+		employeeServiceImpl.save(updateDetails);
+		return "redirect:/AdminPage";
+	}
+	
+	@GetMapping("/AdminPage/{id}")
+	public String deleteUpdate(@PathVariable int id) {
+		employeeServiceImpl.deleteUpdateByID(id);
+		return "redirect:/AdminPage";
+	}
+	
+	@GetMapping("/AdminPage/editUpdate/{id}")
+	public String getEditUpdate(@PathVariable int id, Model model) {
+		model.addAttribute("updateDetailsDTO", employeeServiceImpl.findUpdateById(id).orElse(new UpdateDetails()));
+		return "EditUpdate";
+	}
+	
+	@PostMapping("/AdminPage/{id}")
+	public String postEditUpdate(@PathVariable int id, @ModelAttribute("updateDetailsDTO") UpdateDetailsDTO updateDetailsDTO, Model model) {
+	    Optional<UpdateDetails> findUpdateOptional = employeeServiceImpl.findUpdateById(id);
+	    if (findUpdateOptional.isPresent()) {
+	        UpdateDetails findUpdate = findUpdateOptional.get();
+	        findUpdate.setDescription(updateDetailsDTO.getDescription());
+	        findUpdate.setUploadDate(updateDetailsDTO.getUploadDate());
+	        employeeServiceImpl.save(findUpdate);
+	    }
+	    return "redirect:/AdminPage";
+	}
+	
+	@GetMapping("/AdminTaskPage")
+	public String AdminTaskPage() {
+		return "AdminTaskPage";
+	}
+
+	@GetMapping("/AdminLeavePage")
+	public String AdminLeavePage(Model model, HttpSession session) {
+	    int userID = (int) session.getAttribute("userID");
+	    
+	    // Retrieve leave requests associated with the current user
+	    List<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findAdminByLeaveRequest(userID);
+	    
+	    model.addAttribute("adminLeaveRequests", adminLeaveRequests);
+	    model.addAttribute("userID", session.getAttribute("userID"));
+	    model.addAttribute("fullName", session.getAttribute("fullName"));
+	    model.addAttribute("email", session.getAttribute("email"));
+	    model.addAttribute("phoneNumber", session.getAttribute("phoneNumber"));
+	    return "AdminLeavePage";
+	}
+	
+	@GetMapping("/AdminLeavePage/approve/{id}")
+	public String approveUserLeaveReuqest(@PathVariable int id, Model model, HttpSession session) {
+	    Optional<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findLeaveRequestByLeaveID(id);
+	    
+	    if (adminLeaveRequests.isPresent()) {
+	        UserLeaveRequest userLeaveRequest = adminLeaveRequests.get();
+	        userLeaveRequest.setApproved(true);
+	        userLeaveRequest.setRejected(false);
+	        employeeServiceImpl.updateUserLeaveRequest(userLeaveRequest);
+	    }
+	    return "redirect:/AdminLeavePage";
+	}
+	
+	@GetMapping("/AdminLeavePage/reject/{id}")
+	public String rejectUserLeaveReuqest(@PathVariable int id, Model model, HttpSession session) {
+	    Optional<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findLeaveRequestByLeaveID(id);
+	    
+	    if (adminLeaveRequests.isPresent()) {
+	        UserLeaveRequest userLeaveRequest = adminLeaveRequests.get();
+	        userLeaveRequest.setApproved(false);
+	        userLeaveRequest.setRejected(true);
+	        employeeServiceImpl.updateUserLeaveRequest(userLeaveRequest);
+	    }
+	    return "redirect:/AdminLeavePage";
+	}
+
+	@GetMapping("/employees")
+	public String listEmployees(Model model) {
+		model.addAttribute("employees", employeeServiceImpl.getAllUsers());
+		return "employees";
+	}
+	
+	@GetMapping("/employees/new")
+	public String createEmployee(Model model) {
+		UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+		model.addAttribute("userDetailsDTO", userDetailsDTO);
+		return "create_employee";
+	}
+	
+	@PostMapping("/employees")
+	public String saveEmployee(@ModelAttribute("userDetailsDTO") UserDetailsDTO userDetailsDTO) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		UserDetails userDetails = new UserDetails();
+		userDetails.setFullName(userDetailsDTO.getFullName());
+		userDetails.setEmail(userDetailsDTO.getEmail());
+		userDetails.setPhoneNumber(userDetailsDTO.getPhoneNumber());
+		userDetails.setPassword(encoder.encode(userDetailsDTO.getPassword()));
+		employeeServiceImpl.save(userDetails);
+		return "redirect:/employees";
+	}
+	
+	@GetMapping("/employees/edit/{id}")
+	public String editEmployee(@PathVariable int id, Model model) {
+		model.addAttribute("userDetailsDTO", employeeServiceImpl.findUserById(id).orElse(new UserDetails()));
+		return "edit_employee";
+	}
+	
+	@PostMapping("/employees/{id}")
+	public String updateEmployee(@PathVariable int id, @ModelAttribute("employee") UserDetailsDTO userDetailsDTO, Model model) {
+	    Optional<UserDetails> findEmployeeOptional = employeeServiceImpl.findUserById(id);
+	    if (findEmployeeOptional.isPresent()) {
+	        UserDetails findEmployee = findEmployeeOptional.get();
+	        findEmployee.setFullName(userDetailsDTO.getFullName());
+	        findEmployee.setEmail(userDetailsDTO.getEmail());
+	        findEmployee.setPhoneNumber(userDetailsDTO.getPhoneNumber());
+	        employeeServiceImpl.save(findEmployee);
+	    }
+	    return "redirect:/employees";
+	}
+	
+	@GetMapping("/employees/{id}")
+	public String deleteEmployee(@PathVariable int id) {
+		employeeServiceImpl.deleteEmployeeByID(id);
+		return "redirect:/employees";
+	}
+		
+}

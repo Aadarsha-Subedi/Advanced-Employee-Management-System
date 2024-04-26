@@ -1,0 +1,244 @@
+@charset "ISO-8859-1";
+@import url("https://fonts.googleapis.com/css2?family=Labrada:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Labrada", serif;
+}
+
+body {
+  min-height: 200vh;
+  position: relative;
+  color: white;
+  background: white;
+}
+
+h2 {
+  color: black;
+}
+
+.fixed {
+  height: 12vh;
+  position: sticky;
+  padding: 12px;
+  margin: 0;
+  margin-bottom: 1%;
+  top: 0;
+  background: #212a3e;
+  z-index: 12;
+}
+
+.insider {
+  position: absolute;
+}
+
+.home-icon {
+  filter: invert(1);
+  left: 12rem;
+  top: 1.3rem;
+}
+
+.edit_emp {
+  top: 1.12rem;
+  left: 30rem;
+  filter: invert(1);
+}
+.task {
+  top: 1.2rem;
+  left: 45rem;
+  filter: invert(1);
+}
+.leave {
+  top: 1.2rem;
+  left: 54rem;
+  filter: invert(1);
+}
+
+.logout {
+  top: 1.2rem;
+  right: 2rem;
+  filter: invert(1);
+}
+
+h2 {
+  top: 15rem;
+  margin-left: 1rem;
+}
+
+table {
+  margin: 1rem;
+  margin-top: 1rem;
+  width: 95vw;
+}
+
+table,
+tr,
+th,
+td,
+caption {
+  border: 2px solid #9ba4b5;
+  border-collapse: collapse;
+  padding: 0.5rem;
+  background: #9ba4b5;
+}
+
+tr,
+th,
+td {
+  font-size: 1rem;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  background: #394867;
+  border: 1px solid #394867;
+}
+
+input,
+button {
+  position: relative;
+  margin: 1rem;
+  font: inherit;
+}
+
+button:hover {
+  box-shadow: 1px 3px 4px #1e161d;
+}
+
+#addButton {
+  position: absolute;
+  padding: 12px 26px;
+  border: 0;
+  font-size: 16px;
+  transition: all 150ms ease-in-out;
+
+  border-radius: 14px;
+  border: 1px solid #394867;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset,
+    rgba(0, 0, 0, 0.07) 0 1px 1px, rgba(0, 0, 0, 0.07) 0 2px 2px,
+    rgba(0, 0, 0, 0.07) 0 4px 4px;
+  color: #000000;
+  font-weight: 600;
+  background-image: linear-gradient(180deg, #5a71a0 0%, #394867 100%);
+}
+
+#addButton:hover {
+  box-shadow: 1px 3px 4px #83817c;
+  filter: brightness(1.5);
+}
+
+#addButton:active {
+  transform: scale(1);
+}
+
+header,
+nav,
+main,
+footer {
+  padding: 20px;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+nav ul li a:hover {
+  color: #777;
+}
+
+main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile,
+.tasks {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.updates,
+.company-news {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f2f2f2;
+}
+
+.updates h2,
+.company-news h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.updates p,
+.company-news p {
+  color: #777;
+}
+
+.delete-btn {
+  top: 0;
+  padding: 3px 5px;
+  border: 0;
+  font-size: 16px;
+  transition: all 150ms ease-in-out;
+
+  border-radius: 14px;
+  border: 1px solid red;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset,
+    rgba(0, 0, 0, 0.07) 0 1px 1px, rgba(0, 0, 0, 0.07) 0 2px 2px,
+    rgba(0, 0, 0, 0.07) 0 4px 4px;
+  color: #000000;
+  font-weight: 600;
+  background-image: linear-gradient(180deg, rgb(211, 74, 74) 0%, red 100%);
+  filter: brightness(1.4);
+}
+
+.pending-btn {
+  top: 0;
+  padding: 3px 5px;
+  border: 0;
+  font-size: 16px;
+  transition: all 150ms ease-in-out;
+
+  border-radius: 14px;
+  border: 1px solid orange;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset,
+    rgba(0, 0, 0, 0.07) 0 1px 1px, rgba(0, 0, 0, 0.07) 0 2px 2px,
+    rgba(0, 0, 0, 0.07) 0 4px 4px;
+  color: #000000;
+  font-weight: 600;
+  background-image: linear-gradient(180deg, rgb(249, 195, 95) 0%, orange 100%);
+  filter: brightness(1.4);
+}
+
+footer {
+  text-align: center;
+  background-color: #212a3e;
+  color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

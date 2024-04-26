@@ -1,0 +1,128 @@
+@charset "ISO-8859-1";
+@import url("https://fonts.googleapis.com/css2?family=Labrada:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Labrada", serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f1f6f9;
+  padding-top: 1rem;
+}
+
+h2 {
+  padding-top: 0rem;
+  text-decoration: underline;
+}
+
+.login {
+  border: 2px solid #212a3e;
+  width: 25rem;
+  color: black;
+  padding: 30px 40px;
+  border-radius: 14%;
+  background: #9ba4b5;
+  padding-top: 1rem;
+}
+
+.login .input {
+  width: 100%;
+  height: 32px;
+  margin: 30px 0;
+  border-radius: 36px;
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.login:hover {
+  background-color: #cbd4e4;
+}
+
+.department-label {
+  position: relative;
+  top: 1.5rem;
+}
+
+.input input {
+  height: inherit;
+  width: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 36px;
+  font-size: 20px;
+  /* text-align: center; */
+  padding: 20px 45px 20px 20px;
+}
+
+button {
+  font: inherit;
+}
+
+button:hover {
+  box-shadow: 1px 3px 4px #1e161d;
+}
+
+button {
+  position: relative;
+  padding: 10px 20px;
+  border: 0;
+  font-size: 16px;
+  transition: all 150ms ease-in-out;
+  border-radius: 14px;
+  border: 1px solid #394867;
+  box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset,
+    rgba(0, 0, 0, 0.07) 0 1px 1px, rgba(0, 0, 0, 0.07) 0 2px 2px,
+    rgba(0, 0, 0, 0.07) 0 4px 4px;
+  color: #000000;
+  font-weight: 600;
+  background-image: linear-gradient(180deg, #5a71a0 0%, #394867 100%);
+  top: 1rem;
+}
+
+button:hover {
+  box-shadow: 1px 3px 4px #83817c;
+  filter: brightness(1.5);
+}
+
+button:active {
+  transform: scale(1);
+}
+
+#description {
+  background: inherit;
+  color: #f1f6f9;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+.login:hover {
+  box-shadow: 0px 0px 4px #0b0e15;
+}
+
+input:hover,
+#description:hover {
+  box-shadow: 0px 0px 4px white;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Anish">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <link rel="stylesheet" th:href="@{/CSS/AdminLeavePage.css}">
+        <title>Leave Page</title>
+</head>
+
+<body>
+        <div class="fixed">
+                <p class="logo-text">AEMS</p>
+                <a th:href="@{/AdminPage}"><img class="home-icon insider" th:src="@{/Images/home_icon.png}" alt="home"
+                                title="Home" width="28" height="28"> </a>
+                <!--<a href="../TASK PAGE/index.html"><img class="task-icon insider task" src="../Images/task_icon1.png"
+                                alt="task-icon" title="Task Page" width="30" height="30"> </a>-->
+                <a th:href="@{/AdminLeavePage}"><img class="leave-icon insider leave" th:src="@{/Images/leave_icon.png}"
+                                alt="leave-icon" title="Leave Page" width="30" height="30"> </a>
+        </div>
+        <h2>Leave Page</h2>
+        
+		<table id="itemTable">
+	        <thead>
+	            <tr>
+	                <th>Leave ID</th>
+	                <th>User Name and ID</th>
+	                <th>Description</th>
+	                <th>From Date</th>
+	                <th>To Date</th>
+	                <th>Status</th>
+	                <th>Action</th>
+	            </tr>
+	        </thead>
+	        
+	        <tbody>
+	            <tr th:each="adminLeaveRequest : ${adminLeaveRequests}">
+	                <td th:text="${adminLeaveRequest.id}"></td>
+	                <td th:text="${adminLeaveRequest.employee.id + ' - ' + adminLeaveRequest.employee.fullName}"></td>
+	                <td th:text="${adminLeaveRequest.description}"></td>
+	                <td th:text="${adminLeaveRequest.startDate}"></td>
+	                <td th:text="${adminLeaveRequest.endDate}"></td>
+	                <td th:text="${(adminLeaveRequest.approved == false && adminLeaveRequest.rejected == false) ? 'Pending' : (adminLeaveRequest.approved == true) ? 'Accepted' : 'Rejected'}"></td>
+	                <td>
+						<a th:href="@{/AdminLeavePage/approve/{id}(id=${adminLeaveRequest.id})}" class="btn btn-primary">Approve</a>
+	                	<a th:href="@{/AdminLeavePage/reject/{id}(id=${adminLeaveRequest.id})}" class="btn btn-danger">Reject</a>
+	                </td>
+	            </tr>
+	        </tbody>
+        </table>
+
+        <footer>
+                <p>&copy; 2024 AEMS. All rights reserved.</p>
+        </footer>
+</body>
+
+</html>
