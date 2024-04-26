@@ -7,6 +7,5 @@ import com.example.demo.Entity.UserDetails;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<UserDetails, Integer>{
-	
-	
+
 }

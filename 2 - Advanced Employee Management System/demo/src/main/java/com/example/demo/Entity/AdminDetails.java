@@ -24,8 +24,7 @@ public class AdminDetails {
 	private String fullName;
 	private String phoneNumber;
 	
-	@SuppressWarnings("unused")
-	private AdminDetails() {
+	public AdminDetails() {
 		
 	}
 	

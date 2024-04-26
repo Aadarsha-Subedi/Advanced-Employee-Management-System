@@ -4,33 +4,27 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const userID = document.getElementById("userID").value.trim();
     const description = document.getElementById("description").value.trim();
+    const admin = document.getElementById("admin").value.trim();
     const from_date = document.getElementById("from_date").value.trim();
     const to_date = document.getElementById("to_date").value.trim();
 
-    if (
-      userID !== "" &&
-      description !== "" &&
-      from_date !== "" &&
-      to_date !== ""
-    ) {
-      const leaveID = Math.floor(1000 + Math.random() * 9000);
-
-      window.opener.postMessage(
-        {
-          leaveID: leaveID,
-          userID: userID,
-          description: description,
-          from_date: from_date,
-          to_date: to_date,
-        },
-        "*"
-      );
-
-      window.close();
-    } else {
-      alert("Please Fill in All the Fields.");
+    if (description === "") {
+      alert("Please enter a description.");
+      return; // Stop form submission if description is empty
     }
+
+    if (admin === "") {
+      alert("Please select an admin.");
+      return; // Stop form submission if admin is not selected
+    }
+
+    if (from_date === "" || to_date === "") {
+      alert("Please select both start and end dates.");
+      return; // Stop form submission if any date is not selected
+    }
+
+    // If all validations pass, submit the form
+    form.submit();
   });
 });

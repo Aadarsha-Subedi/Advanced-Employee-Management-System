@@ -11,31 +11,31 @@
 
 <body>
     <section class="login">
-        <form id="addItemForm">
-            <h2 id="formTitle">Leave Request</h2>
-            <div class="input">
-                <label for="userID">User ID</label>
-                <input type="number" id="userID" name="userID"><br><br>
-            </div>
+		<form th:object="${userLeaveRequestDTO}" th:action="@{/UserLeaveRequestPage}" th:method="post">
+			<input type="hidden" th:name="userID" th:value="${userID}" />
+		    <label for="description">Description:</label>
+		    <textarea th:field="*{description}" id="description" cols="42" rows="2.5" placeholder="Leave Message"></textarea>
+		
+		    <label for="adminDetails">Admin:</label>
+			<select id="adminDetails" name="adminID">
+			    <option value="">Select Admin</option>
+			    <option th:each="admin : ${admins}"
+			            th:value="${admin.id}"
+			            th:text="${admin.id + ' - ' + admin.fullName}"></option>
+			</select>
 
-            <div class="input">
-                <label for="description">Description</label><br>
-                <textarea name="description" id="description" cols="42" rows="2.5"
-                    placeholder="Leave Message"></textarea>
-                <br><br>
-            </div>
+		
+		    <label for="startDate">Start Date:</label>
+		    <input type="date" th:field="*{startDate}" id="startDate" name="startDate">
+		
+		    <label for="endDate">End Date:</label>
+		    <input type="date" th:field="*{endDate}" id="endDate" name="endDate">
+		
+		    <button type="submit">Submit</button>
+		</form>
 
-            <div class="input">
-                <label for="from_date">From Date</label>
-                <input type="date" id="from_date" name="from_date"><br><br>
-            </div>
-            <div class="input">
-                <label for="from_date">To Date</label>
-                <input type="date" id="to_date" name="to_date">
-            </div>
 
-            <button type="submit" id="submitButton">Send Request</button>
-        </form>
+
     </section>
     <script th:src="@{/JavaScript/script_for_form.js}" defer></script>
 </body>

@@ -34,7 +34,7 @@
 			<div class ="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
 				<h1 class = "text-center"> Add new Employee </h1>
 				<div class = "card-body">
-					<form th:action="@{/employees}" th:object = "${userDetailsDTO}" method="POST">
+					<form th:action="@{/employees}" th:object = "${userDetailsDTO}" method="POST" onsubmit="return validateForm()">
 						<div class ="form-group">
 							<label> Employee Full Name </label>
 							<input
@@ -80,7 +80,7 @@
 						</div>
 						
 						<div class = "box-footer">
-							<button type="submit" class = "btn btn-primary">
+							<button type="submit" class = "btn btn-primary" >
 								Submit
 							</button>
 						</div>
@@ -90,5 +90,19 @@
 			</div>
 		</div>
 	</div>
+	<script>
+    function validateForm() {
+        var fullName = document.getElementsByName("fullName")[0].value;
+        var email = document.getElementsByName("email")[0].value;
+        var phoneNumber = document.getElementsByName("phoneNumber")[0].value;
+        var password = document.getElementsByName("password")[0].value;
+
+        if (fullName === "" || email === "" || phoneNumber === "" || password === "") {
+            alert("Please fill out all the fields");
+            return false;
+        }
+        return true;
+    }
+	</script>
 </body>
 </html>

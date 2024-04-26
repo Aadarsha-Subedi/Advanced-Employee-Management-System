@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.Entity.AdminDetails;
 import com.example.demo.Entity.UserDetails;
+import com.example.demo.Entity.UserLeaveRequest;
 
 @Service
 @Repository
@@ -27,5 +28,17 @@ public interface EmployeeService {
 	UserDetails updateEmployee(UserDetails userDetails);
 	
 	void deleteEmployeeByID(int id);
+	
+	List<AdminDetails> getAllAdmins();
+	
+	List<UserLeaveRequest> findUserByLeaveRequest(int userID);
+	
+	void deleteUserLeaveRequestById(int id);
+	
+	List<UserLeaveRequest> findAdminByLeaveRequest(int adminID);
+	
+	Optional<UserLeaveRequest> findLeaveRequestByLeaveID(int leaveID);
+	
+	UserLeaveRequest updateUserLeaveRequest(UserLeaveRequest userLeaveRequest);
 	
 }

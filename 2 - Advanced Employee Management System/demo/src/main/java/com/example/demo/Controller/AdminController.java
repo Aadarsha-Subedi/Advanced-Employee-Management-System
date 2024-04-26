@@ -1,5 +1,6 @@
 package com.example.demo.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.DTO.UserDetailsDTO;
 import com.example.demo.Entity.UserDetails;
+import com.example.demo.Entity.UserLeaveRequest;
+import com.example.demo.Repository.EmployeeLeaveRepository;
 import com.example.demo.Service.EmployeeServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,8 +43,44 @@ public class AdminController {
 	}
 
 	@GetMapping("/AdminLeavePage")
-	public String AdminLeavePage() {
-		return "AdminLeavePage";
+	public String AdminLeavePage(Model model, HttpSession session) {
+	    int userID = (int) session.getAttribute("userID");
+	    
+	    // Retrieve leave requests associated with the current user
+	    List<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findAdminByLeaveRequest(userID);
+	    
+	    model.addAttribute("adminLeaveRequests", adminLeaveRequests);
+	    model.addAttribute("userID", session.getAttribute("userID"));
+	    model.addAttribute("fullName", session.getAttribute("fullName"));
+	    model.addAttribute("email", session.getAttribute("email"));
+	    model.addAttribute("phoneNumber", session.getAttribute("phoneNumber"));
+	    return "AdminLeavePage";
+	}
+	
+	@GetMapping("/AdminLeavePage/approve/{id}")
+	public String approveUserLeaveReuqest(@PathVariable int id, Model model, HttpSession session) {
+	    Optional<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findLeaveRequestByLeaveID(id);
+	    
+	    if (adminLeaveRequests.isPresent()) {
+	        UserLeaveRequest userLeaveRequest = adminLeaveRequests.get();
+	        userLeaveRequest.setApproved(true);
+	        userLeaveRequest.setRejected(false);
+	        employeeServiceImpl.updateUserLeaveRequest(userLeaveRequest);
+	    }
+	    return "redirect:/AdminLeavePage";
+	}
+	
+	@GetMapping("/AdminLeavePage/reject/{id}")
+	public String rejectUserLeaveReuqest(@PathVariable int id, Model model, HttpSession session) {
+	    Optional<UserLeaveRequest> adminLeaveRequests = employeeServiceImpl.findLeaveRequestByLeaveID(id);
+	    
+	    if (adminLeaveRequests.isPresent()) {
+	        UserLeaveRequest userLeaveRequest = adminLeaveRequests.get();
+	        userLeaveRequest.setApproved(false);
+	        userLeaveRequest.setRejected(true);
+	        employeeServiceImpl.updateUserLeaveRequest(userLeaveRequest);
+	    }
+	    return "redirect:/AdminLeavePage";
 	}
 
 	@GetMapping("/employees")
@@ -93,6 +132,5 @@ public class AdminController {
 		employeeServiceImpl.deleteEmployeeByID(id);
 		return "redirect:/employees";
 	}
-
-	
+		
 }

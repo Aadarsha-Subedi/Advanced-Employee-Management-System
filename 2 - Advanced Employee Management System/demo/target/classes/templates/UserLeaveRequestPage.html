@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="This is page for employee to request leave and receive update about the same.">
+    <meta name="description" content="This is a page for employees to request leave and receive updates about the same.">
     <link rel="stylesheet" th:href="@{/CSS/UserLeaveRequestPage.css}">
     <title>Leave Requests Page</title>
 </head>
@@ -25,24 +25,35 @@
         <thead>
             <tr>
                 <th>Leave ID</th>
-                <th>User ID</th>
+                <th>Admin Name and ID</th>
                 <th>Description</th>
                 <th>From Date</th>
                 <th>To Date</th>
                 <th>Status</th>
-                <th>Delete</th>
+                <th>Action</th>
             </tr>
         </thead>
+        <tbody>
+            <tr th:each="userLeaveRequest : ${userLeaveRequests}">
+                <td th:text="${userLeaveRequest.id}"></td>
+                <td th:text="${userLeaveRequest.admin.id + ' - ' + userLeaveRequest.admin.fullName}"></td>
+                <td th:text="${userLeaveRequest.description}"></td>
+                <td th:text="${userLeaveRequest.startDate}"></td>
+                <td th:text="${userLeaveRequest.endDate}"></td>
+                <td th:text="${(userLeaveRequest.approved == false && userLeaveRequest.rejected == false) ? 'Pending' : (userLeaveRequest.approved == true) ? 'Accepted' : 'Rejected'}"></td>
+                <td><a th:href="@{/UserLeaveRequestPage/{id}(id=${userLeaveRequest.getId()})}" class="btn btn-danger">Delete</a></td>
+            </tr>
+        </tbody>
     </table>
     <button id="addButton" onclick="redirectToLeaveRequestForm()">Request Leave</button>
     <footer>
         <p>&copy; 2024 AEMS. All rights reserved.</p>
     </footer>
     <script>
-		 function redirectToLeaveRequestForm() {
+        function redirectToLeaveRequestForm() {
             window.location.href = "/UserLeaveRequestForm";
         }
-	</script>
+    </script>
 </body>
 
 </html>
